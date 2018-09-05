@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="lunbo.css" rel="stylesheet">
+    <script src="common.js"></script>
+    <script src="animate.js"></script>
+    <script src="lunbo.js"></script>
+    <script src="ajaxbak.js"></script>
+  <script>
+      window.onload = function () {
+          ajax({
+              url:'lunbo.json',
+              success:function (res) {
+                  console.log(res);
+                  var obj = JSON.parse(res);
+                  console.log(obj);
+                  var item = document.getElementsByClassName('item')[0];
+                  var page = document.getElementsByClassName('page')[0];
+                  for(var i=0;i<obj.data.length;i++){
+                      var tmp = obj.data[i];
+                      var src = tmp.url;
+                      var newLi = document.createElement('li');
+                      item.appendChild(newLi);
+                      var img = document.createElement('img');
+                      img.src = src;
+                      newLi.appendChild(img);
+
+                      var pageLi = document.createElement('li');
+                      page.appendChild(pageLi);
+
+                  }
+
+                  //轮播图 插件
+                  var lunbo1 = new lunbo({
+                    className:'box',
+                    isAutoPlay:true,
+                    autoPlayTime:3000
+                  });
+
+
+              }
+          })
+
+
+          	var lunbo1 = new lunbo({
+                  className:'box1',
+                  isAutoPlay:true,
+                  autoPlayTime:1000
+              });
+//            var lunbo2 = new lunbo({
+//                className:'box1'
+//            });
+
+
+      }
+
+  </script>
+   
+    
+</head>
+<body>
+
+<div class="box">
+    <ul class="item" >
+        <!--<li><img src="images/1.jpg"></li>-->
+        <!--<li><img src="images/2.jpg"></li>-->
+        <!--<li><img src="images/3.jpg"></li>-->
+        <!--<li><img src="images/4.jpg"></li>-->
+        <!--<li><img src="images/5.jpg"></li>-->
+        <!--<li><img src="images/4.jpg"></li>-->
+    </ul>
+    <button class="leftBtn">&lt;</button>
+    <button class="rightBtn">&gt;</button>
+
+    <ul class="page"> </ul>
+
+</div>
+
+
+<div class="box1">
+    <ul class="item" >
+        <li><img src="img/1.jpg"></li>
+        <li><img src="img/5.jpg"></li>
+        <li><img src="img/3.jpg"></li>
+        <li><img src="img/4.jpg"></li>
+        <li><img src="img/5.jpg"></li>
+
+    </ul>
+    <button class="leftBtn">&lt;</button>
+    <button class="rightBtn">&gt;</button>
+
+    <ul class="page"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>
+
+</div>
+
+</body>
+</html>

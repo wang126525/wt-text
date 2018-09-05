@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			        .item li{
+            list-style: none;
+            width: 590px;
+            height: 340px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+        .leftBtn{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+ 
+        .rightBtn{
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        div{
+            position: relative;
+            width: 590px;
+            height: 340px;
+        }
+        .page{
+            position: absolute;
+            bottom: 50px;
+            left: 200px;
+            height: 30px;
+        }
+        .page li{
+            float: left;
+            width: 30px;
+            height: 30px;
+            list-style: none;
+            background: red;
+            border-radius: 50%;
+            line-height: 30px;
+            text-align: center;
+        }
+
+		</style>
+		<script>
+			function getStyle(ele,attr){          //获取行内元素的函数，就是获取运动元素的当前状态
+				if(ele.currentStyle){
+					return ele.currentStyle[attr]
+				}else{
+					
+					return getComputedStyle(ele)[attr]   //兼容ie
+				}
+			}
+			 
+			//可以传三个参数，一个是需要运动的元素，第二个是一个对象，把元素需要做的动画传进去，可以传多个值，第三是回调函数
+			function animate(ele, targetObj, callback) {
+				//清除可能存在的定时器
+				clearInterval(ele.timer)
+				//创建一个定时器，做运动
+				ele.timer = setInterval(function() {
+			 
+					//假设已经到了目的地
+					var flag = true;
+			 
+					for(var key in targetObj) {
+						
+						//透明度变化比较特殊就单独列出来，首先判断传进来的参数是不是opacity
+						if(key == 'opacity') {
+							var target = targetObj[key]; //目标值
+							var dir = key; //获得变化的opacity
+								
+							//除于8是为了做缓冲运动，由于opacity是0-1之间的数字为了方便做取整，在这里先让他*100	
+							var speed = (target - parseFloat(getStyle(ele, key))) / 8 * 100   
+							//三目运算
+							//为什么要取整那，像像素等一些属性当增加值小于0.5时就加不上去了
+							speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+							
+							//把当前样式加上增加值，赋值给元素
+							ele.style[key] = parseFloat(getStyle(ele, key)) + speed / 100;
+							
+							//做判断是否完成运动
+							if(parseFloat(getStyle(ele, key)) != target) {
+								flag = false;
+								//console.log(key,'没有完成了')
+			 
+							}
+						} else {
+							var target = targetObj[key]; //目标值
+							var dir = key; //方向  例如left top
+			 
+							var speed = (target - parseInt(getStyle(ele, key))) / 8;
+			 
+							speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+			 
+							ele.style[key] = parseInt(getStyle(ele, key)) + speed + 'px';
+			 
+			 
+							if(parseInt(getStyle(ele, key)) != target) {
+								flag = false;
+								//console.log(key,'没有完成了')
+							}
+						}
+			 
+					}
+			 
+					//判断一个下 所有的目标是否都完成了
+					if(flag) {
+						clearInterval(ele.timer)
+						//console.log('本次运动结束',callback)
+			 
+						if(callback) {
+							callback();  //调用回调函数
+						}
+			 
+					}
+				}, 80)
+			 
+			}
+ 
+
+			function showCurrentPagePoint(current) {
+			    var page = document.getElementsByClassName('page')[0];
+			    var lis = page.getElementsByTagName('li');
+			        for(var i=0;i<lis.length;i++){
+			            lis[i].style.background = 'red';
+			        }
+			        lis[current].style.background = 'white';
+			}
+
+			
+			//拿到左右按钮
+			var rightBtn = document.getElementsByClassName('rightBtn')[0];
+			var leftBtn = document.getElementsByClassName('leftBtn')[0];
+						
+			//记录当前显示的是第几张图片
+			var page = 0;
+			//先拿到图片的ul然后在拿到li
+			var item = document.getElementsByClassName('item')[0];
+			var itemLis = item.getElementsByTagName('li');
+			
+			rightBtn.onclick = function(){
+				
+			    animate(itemLis[page],{opacity:0});//当前显示的图片消失
+			    page++;
+			    if(page == 5){ //做判断显示到第6张时跳到第一章
+				page = 0;
+			    };
+			    animate(itemLis[page],{opacity:1});//当前图片的下一张出现
+							
+			    //page 对应的小圆点显示
+			    showPagePonint(page);					
+			};
+			
+			var  timer = setInterval(function(){
+			    rightBtn.onclick();
+			},2000);
+			
+			
+			var box = document.getElementsByClassName('box')[0];
+			var box = document.getElementsByClassName('box')[0];
+			box.onmouseenter = function(){
+			    clearInterval(timer);
+			};
+			box.onmouseleave = function(){
+			     timer = setInterval(function(){
+			    rightBtn.onclick();
+			    },2000);
+			};
+			
+			
+			
+
+
+
+
+			
+			
+
+			
+
+			
+			
+		</script>
+	</head>
+	<body>
+		<div class="box">
+		    <ul class="item">
+		        <li style="opacity: 1"><img src="img/1.jpg"></li>
+		        <!--<li><img src="images/2.jpg"></li>-->
+		        <li><img src="img/3.jpg"></li>
+		        <li><img src="img/4.jpg"></li>
+		        <li><img src="img/5.jpg"></li>
+		    </ul>
+		    <button class="leftBtn"><</button>    <!-- 左按钮 -->
+		    <button class="rightBtn">></button>   <!-- 右按钮 -->
+ 
+    		<ul class="page"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>   
+ 
+		</div>
+
+	</body>
+</html>

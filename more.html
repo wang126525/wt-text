@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.list{
+				border: 1px solid orange;
+				width: 800px;
+				padding: 5px;
+				height: 30px;
+				line-height: 30px;
+				font-family: "微软雅黑";
+				font-size: 14px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="main">
+				<!--<div class="list">
+				ajax.setRequestHeader(‘content-type’ , ‘application/x-www-form-urlencoded’)
+数据放在send()里面作为参数传递
+			</div>-->
+			</div>
+			<button style="margin-top:5px;" id="btn">加载更多</button>
+		</div>
+		<script type="text/javascript">
+			function Loading(){
+				this.main=document.getElementById('main');
+				this.btn=document.getElementById('btn');
+				this.page=5;//每次加载的数量
+				this.index=0;//开始的索引
+				this.num=0;//点击的次数
+				this.init();
+			}
+			Loading.prototype.init=function(){
+				var that=this;
+				this.btn.onclick=function(){
+					that.num++;
+					that.index=that.num*that.page;
+					that.show(that.index,that.page);
+				}
+			}
+			Loading.prototype.show=function(s,p){//p=4
+				var that=this;
+				var ajax=new XMLHttpRequest();
+				ajax.open('get','news.json',true);
+				ajax.send();
+				ajax.onreadystatechange=function(){
+					if(ajax.readyState==4 && ajax.status==200){
+						var d=JSON.parse(ajax.responseText);
+						var arrlist=d.data;
+						if(arrlist.length-s<p){
+							p=arrlist.length-s;
+						}
+						var html='';
+						for(var i=s;i<(s+p);i++){//4
+							html+='<div class="list">'+arrlist[i].title+'</div>'
+						}
+						that.main.innerHTML+=html;
+						
+						if(arrlist.length==s+p){
+							that.btn.style.display='none';
+						}
+					}
+				}
+			}
+			var loading=new Loading();
+			loading.show(loading.index,loading.page);
+		</script>
+	</body>
+</html>

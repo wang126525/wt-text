@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<input type="text" v-model="search" /><br />
+			<ul>
+				<li v-for = "item in testArr">{{item}}</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var wv = new Vue({
+		  el:"#app",
+		  data:{
+		  	search:"",
+		  	list:["apple","banana","orange","lemon","pear"],
+		  	testArr:[]
+		  },
+		  methods:{
+		  	
+		  },
+		  computed:{
+//		  	newList:function(){
+//		  		var arr = [];
+//		  		var that = this;
+//		  		this.list.forEach(function(item){
+//		  			if(item.indexOf(that.search) != -1){
+//		  				arr.push(item)
+//		  			}
+//		  		})
+//		  		return arr;
+//		  	}
+		  },
+//		  watch:{
+//		  	search:function(newVal,oldVal){
+//		  		console.log(newVal+"---"+oldVal)
+//		  		var arr = [];
+//		  		this.testArr = this.list;
+//		  		var that = this;
+//		  		this.testArr.forEach(function(item){
+//		  			if(item.indexOf(newVal) != -1){
+//		  				arr.push(item)
+//		  			}
+//		  		});
+//		  		this.testArr = arr;
+//		  	}
+//		  }
+		});
+		
+		wv.$watch("search",function(newVal,oldVal){
+			console.log(newVal+"---"+oldVal)
+			var arr = [];
+		  	this.testArr = this.list;
+		  	var that = this;
+		  	this.testArr.forEach(function(item){
+		  		if(item.indexOf(newVal) != -1){
+		  			arr.push(item)
+		  		}
+		  	});
+		  	this.testArr = arr;
+		});
+	</script>
+</html>

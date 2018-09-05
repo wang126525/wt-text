@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="jquery-3.2.1.js" ></script>
+		<script>
+			$.ajax({
+				type:"get",
+				url:"http://127.0.0.1/text/arr.php?__hbt=1531558970547",
+				async:true,
+				dataType:"json",
+				success:function(data){
+					
+					var html='';
+					console.log(data);
+					for(var i=0;i<data.length;i++){
+						html+="<li><a href=''>"+data[i].title+"</a><span>"+data[i].date+"</span></li>";
+					};
+					document.getElementById('contents').innerHTML=html;
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<ul id="contents"></ul>
+	</body>
+</html>

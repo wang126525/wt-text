@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="jquery-3.2.1.js" ></script>
+	</head>
+	<body>
+		
+		请输入城市名：<input type="text" id="city" />
+		<script type="text/javascript">
+			function baidu(data){
+				var obj=data;
+				console.log(obj);
+//				document.body.innerHTML="城市："+obj.city+"<br>天气："+obj.weather+"<br>最高温度："+obj.temp1+"<br>最低温度："+obj.temp2;
+			}
+		
+			var oInput=document.getElementById('city');
+			oInput.onblur=function(){
+				$.ajax({
+					type:"get",
+					url:"https://jisutqybmf.market.alicloudapi.com/weather/query?city="+oInput.value,
+					async:true,
+					beforeSend:function(xhr){
+						xhr.setRequestHeader("Authorization","APPCODE 1f05cfd91d7049c78c4d228a2f0178b1");
+					},
+					success:function(data){
+						console.log(data);
+						document.body.innerHTML="城市："+oInput.value+"<br>天气："+data.result.weather+"<br>温度："+data.result.temp+"<br>最高温度："+data.result.temphigh+"<br>最低温度："+data.result.templow;
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

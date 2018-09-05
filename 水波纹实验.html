@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			window.onload=function(){
+			
+			function init(height,width,xOffset,speed,rangeValue,nowRange) {
+			    this.canvas=document.querySelector('#wave');
+			    this.canvas.height = height;
+			    this.canvas.width = width;
+			    this.ctx = this.canvas.getContext('2d');
+			    this.xOffset = xOffset;  // 初始偏移
+			    this.speed = speed;  // 偏移速度
+			    this.isDrawCircle=false;//画圆
+			    this.rangeValue = rangeValue;
+			    // 初始水位
+			    this.nowRange = nowRange;
+			    this.drawSin=drawSin;
+			    this.drawCircle=drawCircle;
+			    this.draw=draw;
+			    requestAnimationFrame(this.draw.bind(this));
+			  }
+			  function drawSin() {
+			    const points = [];
+			    const canvasWidth = this.canvas.width;
+			    const canvasHeight = this.canvas.height;
+			    const startX = 0;
+			    const waveWidth = 0.02; // 波浪宽度,数越小越宽
+			    const waveHeight = 10; // 波浪高度,数越大越高
+			    // const xOffset = 0; // 水平位移
+			    this.ctx.beginPath();
+			    for (let x = startX; x < startX + canvasWidth; x += 20 / canvasWidth) {
+			      const y = waveHeight * Math.sin((startX + x) * waveWidth + this.xOffset);
+			      points.push([x, (1 - this.nowRange) * canvasHeight + y]);
+			      this.ctx.lineTo(x, (1 - this.nowRange) * canvasHeight  + y);
+			    }
+			    this.ctx.lineTo(canvasWidth, canvasHeight);
+			    this.ctx.lineTo(startX, canvasHeight);
+			    this.ctx.lineTo(points[0][0], points[0][1]);
+			    this.ctx.fill();
+//			    this.ctx.stroke();
+			    const gradient=this.ctx.createLinearGradient(0,0,0,300);
+			    gradient.addColorStop(0,"#f00");
+			    gradient.addColorStop(1,"#00f");
+			    this.ctx.fillStyle=gradient;
+			  }
+			
+			  function draw() {
+			    const canvas = this.canvas;
+			    const ctx = canvas.getContext('2d');
+			    ctx.clearRect(0, 0, canvas.width, canvas.height);
+			    // 曲线绘制
+			    if (!this.isDrawCircle) {
+			      this.drawCircle();
+			    }
+			    if (this.nowRange < this.rangeValue) {
+			      this.nowRange += 0.001;
+			    }
+			    this.drawSin();
+			    this.xOffset += this.speed;
+			    requestAnimationFrame(this.draw.bind(this));
+			  }
+			
+			  function drawCircle() {
+			    const r = this.ctx.canvas.width / 2;
+			    const lineWidth = 1;
+			    const cR = r - (lineWidth);
+			    this.ctx.lineWidth = lineWidth;
+			    this.ctx.beginPath();
+			    this.ctx.arc(r, r, cR, 0, 2 * Math.PI);
+			    this.ctx.stroke();
+			    this.ctx.strokeStyle="#f00";
+			    this.ctx.clip();
+			    this.isDrawCircle = true;
+			  }
+
+  			var a=new init(300,300,0,0.03,0.6,0);
+			
+			}
+			
+		</script>
+	</head>
+	<body>
+		<canvas id="wave"></canvas>
+	</body>
+</html>

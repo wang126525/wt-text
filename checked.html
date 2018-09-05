@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>switch切换</title>
+		<style>
+			/*.iSwitch{
+			  position: relative;
+			  display: inline-block;
+			  width: 60px;
+			  height: 30px;
+			  border-radius: 15px;
+			  background: #dcdcdc;
+			  border:1px solid #dcdcdc;
+			  box-shadow: 0 0 5px #dcdcdc;
+			  overflow: hidden;
+			  vertical-align: middle;
+			
+			}
+			.iSwitch input{
+			  visibility: hidden;
+			}
+			.iSwitch i{
+			  position: absolute;
+			  top: 0;
+			  left: 0;
+			  display: inline-block;
+			  width: 50%;
+			  height: 100%;
+			  border-radius: 100%;
+			  background: #fff;
+			}
+			.iSwitch i::before{
+			  content: " ";
+			  display: none;
+			  width: 200%;
+			  height: 100%;
+			  border-radius: 25%;
+			  background: #61cafd;
+			}
+			.iSwitch i::after{
+			  content: " ";
+			  position: absolute;
+			  left: 0;
+			  top: 0;
+			  z-index: 2;
+			  display: inline-block;
+			  width: 100%;
+			  height: 100%;
+			  border-radius: 100%;
+			  background: #fff;
+			}
+			.iSwitch input:checked + i{
+			  transform:translateX(100%);
+			  -webkit-transform:translateX(100%);
+			}
+			.iSwitch input:checked + i:before{
+			  display: inline-block;
+			  transform:translateX(-50%);
+			  -webkit-transform:translateX(-50%);
+			}*/
+		</style>
+		<style>
+			.iSwitch{
+				display: block;
+				position: relative;
+				background: #D1D3D6;
+				width: 120px;
+				height: 30px;
+				border-radius: 15px;
+				/*padding: 2px;
+				box-sizing: border-box;*/
+			}
+			input{
+				display: none;
+			}
+			i::after{
+				content: " ";
+				display: inline-block;
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 28px;
+				height: 28px;
+				border-radius: 50%;
+				background: #FFA500;
+				margin: 1px;
+				/*z-index: 2;*/
+			}
+			input:checked + i::after{
+				left: 90px;
+				transition: all 200ms ease-out;
+			}
+			input:checked + i::before{
+				content: " ";
+				display: inline-block;
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				border-radius: 14px;
+				background: #1FBBDC;
+				margin: 1px;
+				
+			}
+			input + i::after{
+				left: 0;
+				transition: all 200ms ease-out;
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				var c=document.getElementsByTagName("label");
+				var y=document.getElementById("inp");
+				c[0].onclick=function(){
+					console.log(22);
+					console.log(y.checked);
+				};
+			}
+		</script>
+	</head>
+	<body>
+		<label class="iSwitch">
+			<input id="inp" type="checkbox">
+			<i></i>
+		</label> 
+		
+	</body>
+</html>

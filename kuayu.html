@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>百度跨域</title>
+		<script type="text/javascript" src="jquery-3.2.1.js"></script>
+		<script>
+			function callback(res){
+				console.log(res);
+				var data=res.s;
+				var html="";
+				for(var i=0;i<data.length;i++){
+					html+=`<li>${data[i]}<li>`;
+				};
+				$("#list").html(html);
+			}
+			window.onload=function(){
+				var scr=document.getElementById("scr");
+				var ipt=document.getElementById("ipt");
+				ipt.addEventListener("keyup",function(){
+					var oscript=document.createElement("script");
+					oscript.src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+ipt.value+"&json=1&p=3&sid=1447_26459_21123_26350_26925_20928&req=2&csor=1&cb=callback";
+					scr.appendChild(oscript);
+					scr.removeChild(oscript);
+				});
+			};
+		</script>
+	</head>
+	<body>
+	<span>百度:</span><input id="ipt" type="text"/>
+	<div class="content">
+		<ul id="list">
+			<li>12222</li>
+			<li>12222</li>
+			<li>12222</li>
+		</ul>
+	</div>
+	<div id="scr"></div>
+	</body>
+</html>

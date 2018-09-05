@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#div{
+				width: 100%;
+			}
+			#list{
+				width: 500px;
+				margin: 50px auto;
+				font-size: 12px;
+				color: #666666;
+				box-shadow: 0 0 3px #E9E9E9;
+				line-height: 20px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="content">
+			<ul id="list">125</ul>
+		</div>
+		<button id="btn">加载</button>
+		<script>
+			function MORE(){
+				this.list=document.getElementById("list");
+				this.btn=document.getElementById("btn");
+				this.page=5;
+				this.num=0;
+				this.index=0;
+				this.init();
+			}
+			MORE.prototype.init=function(){
+				var that=this;
+				this.btn.onclick=function(){
+					that.num++;
+					that.index=that.page*that.num;
+					that.show(that.page,that.index);
+					
+				}
+			}
+			MORE.prototype.show=function(p,s){
+				var that=this;
+				var ajax=new XMLHttpRequest();
+					ajax.open("get","news.json",true);
+					ajax.send();
+					ajax.onreadystatechange=function(){
+						if(ajax.readyState==4 && ajax.status==200){
+							var arr=JSON.parse(ajax.responseText);
+							var arrlist=arr.data;
+							var html="";
+							if(arrlist.length<s+p){
+								p=arrlist.length-s;
+							};
+							for(var i=s;i<s+p;i++){
+								html+="<li>"+arrlist[i].title+"</li>";
+							};
+							that.list.innerHTML+=html;
+							if(arrlist.length==s+p){
+									that.btn.style.display="none";
+									console.log(1);
+							};
+							
+							
+						};
+					};
+					
+					
+				
+			}
+			var more=new MORE();
+			more.show(more.page,more.index);
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

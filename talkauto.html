@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>聊天对话框</title>
+<script type="text/javascript" src="jquery-3.2.1.js" ></script>
+<style type="text/css">
+*{font-size: 14px; padding:0; margin:0;}
+.main{
+	position: relative;
+	margin: 20px auto;
+	border: 1px solid steelblue;
+	width: 430px;
+	height: 400px;
+}
+.msgInput{
+	display: block;
+	width: 406px;
+	height: 60px;
+	margin: 10px auto;
+	
+}
+.sendbtn{
+	position: absolute;
+	width: 100px;
+	height: 29px;
+	bottom: 5px;
+	right: 10px;
+}
+.content{
+	list-style: none;
+	width: 410px;
+	height: 280px;
+	margin: 5px auto;
+	border: 1px dotted #D1D3D6;
+	overflow-y: scroll;
+}
+.msgContent{
+	width:auto;
+	max-width: 250px;
+	height: auto;
+	word-break: break-all;
+	margin: 5px;
+	padding: 3px;
+	border-radius: 5px;
+}
+
+.content .left{
+	float: left;
+	text-align: left;
+	background-color: lightgrey;
+}
+.content .right{
+	float: right;
+	text-align: right;
+	background-color: yellowgreen;
+}
+
+
+</style>
+<script type="text/javascript">
+	window.onload=function(){
+
+		var input = document.getElementById('msg_input');//查找缓存
+		document.getElementById('sendbtn').onclick=function () {
+			//var input1 = document.getElementById('msg_input');//
+			//input0
+
+			sendMsg();
+		}
+
+
+
+		//快捷键 发送
+		document.onkeypress = function (event) {
+			var e = event || window.event;
+			var keycode = e.keyCode || e.which;
+			console.log(e)
+			if( keycode==10){//判断同时按下ctrl 和enter
+				sendMsg()
+			}
+		}
+
+		function sendMsg() {
+			var input = document.getElementById('msg_input');//查找缓存
+			var ul = document.getElementById('content');
+
+			var newLi = document.createElement('li');
+			newLi.innerHTML = input.value;
+			newLi.className = 'msgContent right';
+			ul.appendChild(newLi);
+
+			var div = document.createElement('div');
+			div.style = 'clear:both';
+			ul.appendChild(div);
+
+            $.ajax({
+                url:"https:jisuznwd.market.alicloudapi.com/iqa/query?question="+input.value,
+                beforeSend:function(xhr){
+                	xhr.setRequestHeader("Authorization","APPCODE 1f05cfd91d7049c78c4d228a2f0178b1");
+                },
+                success:function (res) {
+//                console.log(res)
+//                  var obj = JSON.parse(res);
+//                  console.log(obj)
+//					var array =  obj.showapi_res_body.dayList;
+//                  var zhengzhou = array[0];
+//                  var tmp = '温度:'+zhengzhou.day_air_temperature+','+zhengzhou.day_weather;
+//					console.log(tmp)
+					var tmp=res.result.content;
+
+                    var newLi = document.createElement('li');
+                    newLi.innerHTML = tmp;
+                    newLi.className = 'msgContent left';
+                    ul.appendChild(newLi);
+
+                    var div = document.createElement('div');
+                    div.style = 'clear:both';
+                    ul.appendChild(div);
+                    input.value = '';
+                    newLi.scrollIntoView();//将元素滚动到可见位置
+                }
+            })
+
+            input.value = '';
+            newLi.scrollIntoView();//将元素滚动到可见位置
+		}
+
+	}
+
+
+
+//  function ajax(obj) {
+//      //?lastCursor=6610&pageSize=10
+////            var url = 'reg.php';
+//      var xhr = null;
+//      if(window.ActiveXObject){
+//          xhr = new ActiveXObject('Microsoft.XMLHTTP')
+//      }else{
+//          xhr = new XMLHttpRequest();
+//      }
+////        $username = $_REQUEST['username'];
+////        $password = $_REQUEST['password'];
+//
+//      //打开与服务器的连接
+//      if(obj.method){
+//          xhr.open(obj.method,obj.url,true);
+//      }else{
+//          xhr.open('get',obj.url,true);
+//      }
+//      xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+//      xhr.setRequestHeader("Authorization","APPCODE b56ceeed6e2449fc8985d4fe85769899")
+//
+//
+//      // {username:'zhangsa',password:123123}
+////        sendData = encodeURIComponent(sendData);
+//
+//
+//      // 发送请求
+//      //console.log(res);
+//      //回调函数
+//      xhr.onreadystatechange = function () {
+////                console.log(xhr.readyState)
+//          if(xhr.readyState == 4){
+//              //数据接收完毕
+//              if(xhr.status == 200){
+////                        console.log('请求成功',xhr.responseText)
+//                  if(obj.success){
+//                      obj.success(xhr.responseText)
+//                  }
+//
+//              }else{
+////                        console.log(xhr.status,'请求出错')
+//                  if(obj.failure){
+//                      obj.failure('请求失败')
+//                  }
+//              }
+//          }
+//      }
+////            var sendData = 'username=zhangsan&password=123456';
+//      if( obj.method == undefined ||obj.method.toLowerCase() =='get'){
+//          xhr.send(null);//
+//      }else{
+//          xhr.send(obj.params);//
+//
+//      }
+//  }
+
+
+</script>
+
+</head>
+
+<body>
+	<div id="main" class="main">
+		<ul id="content" class="content">
+			<li class="msgContent left">hello?</li>
+			<div style="clear:both"></div>
+			<li class="msgContent left">hello</li>
+			<div style="clear:both"></div>
+			<li class="msgContent right">hi</li>
+			<div style="clear:both"></div>
+			<li class="msgContent left">hehe</li>
+			<div style="clear:both"></div>
+			<li class="msgContent left">goodbye</li>
+			<div style="clear:both"></div>
+			<li class="msgContent right">。。。。</li>
+			<div style="clear:both"></div>
+			<li class="msgContent right">sdfasdsadfassdfsdfsdfdsfsdfsdfsdfdfasdffasdfasfdasd fasd fasd fasdfasdfasdf</li>
+			<div style="clear:both"></div>
+			<li class="msgContent right"> 哈哈</li>
+			<div style="clear:both"></div>
+		</ul>
+		<textarea id="msg_input" class="msgInput"></textarea>
+		<button id="sendbtn" class="sendbtn">发送</button>
+	</div>
+</body>
+</html>

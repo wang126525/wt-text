@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="jquery-1.4.4.min.js" ></script>
+		<style>
+			#content{
+				height: 300px;
+				width: 3000px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				background: #731C03;
+			}
+			#ee::after{
+				content: '';
+			    display: inline-block;
+			    width: 0;
+			    height: 0;
+			    border: 20px solid transparent;
+			    /*border: 20px solid #F104E3;*/
+			    border-left: 20px solid #1FBBDC;
+			    /*border-right: 20px solid #1FBBDC;*/
+			    position: relative;
+			    top: 2px;
+			    left: 10px;
+
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				console.log(window.navigator.userAgent);
+				var ocontent=document.getElementById("content");
+				var oscollleft=3030-window.innerWidth;
+				ocontent.onmousedown=function(ev){
+					var ev=ev||window.event;
+					var evof=ev.offsetX;
+					document.onmousemove=function(ev){
+						if(ocontent.setCapture){
+							ocontent.setCapture();
+						};
+						var ev=ev||window.event;
+						var oleft=0;
+//						console.log(ev.offsetX);
+						if(ev.clientX-evof>=0){
+							oleft=ev.clientX-evof;
+							ocontent.style.left=0;
+						}else{
+							oleft=ev.clientX-evof;
+							ocontent.style.left=oleft+"px";
+							if(ocontent.offsetLeft<=-oscollleft){
+								ocontent.style.left=-oscollleft+"px";
+							}
+						}
+					};
+					document.onmouseup=function(ev){
+						if(ocontent.releaseCapture){
+							ocontent.releaseCapture();
+						};
+						document.onmousedown=null;
+						document.onmousemove=null;
+						return false;
+						
+					};
+					return false;
+					
+				}
+				document.getElementById("btn");
+				btn.onclick=function(){
+//					var arr=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
+//					var color=[];
+//					for(var i=0;i<6;i++){
+//						var m=Math.floor(Math.random()*16);
+//						color[i]=arr[m];
+//						console.log(m);
+//					};
+//					console.log(color);
+//					var str=color.join("");
+//					console.log(str);
+					ocontent.style.background='#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).slice(-6);
+					console.log((Math.random()*0x1000000<<0).toString(16));
+				}
+				
+				
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div style="width: 100%;height: 200px;background: #1FBBDC;"></div>
+		<div style="width: 100%;height: 400px;background: #9ACD32;position: relative;overflow: hidden;">
+			<div id="content">
+				很多人以为春日妩媚,杏花疏雨，是世间最值得驻足的景致;而我一直以为夏日炎炎，荷塘飘香，驻足远观，才是世间最惬意的时光。
+
+一枚浅浅的池塘，水草漫淹，荷叶青青，无论晴空万里，还是骤雨风急，只要有那么三两枝荷花，安静地挺立荷塘中央，那定是一道值得品味的风景。尘世烟雨，都与其无关，她只管独自盛开，袅袅娜娜。傲然挺立，荷香缕缕。夏季，她有着独特的位置。
+
+硕大的荷叶，在灼灼的阳光下，随风摇动。三两滴水珠，在荷叶上滚动，闪着细碎的银光。阳光，被揉碎了，躲进了滚动的水珠里。一闪一闪的，和着微风，在荷叶上起舞。粉色的花苞，朝阳下，娇羞，恬静，自然。她，沉醉于自己的世界，忘情，忘我。她，只做尘世中唯一的自己。花已盛开，清风已来。
+
+粉色的花朵，张开，露出黄色的花蕊。有水珠藏在蕊中，有阳光藏在蕊中，有清香藏在蕊中，她自己，也藏在蕊中。累了,撑一伞荷盖,把阳光送走;倦了,摇动缕缕清香,与清风私语。天地之间，唯有自己，不卑不亢，不争不怨，安静的，自然的，盛放自己的生命。她懂得，世间一切终归尘土，繁华终会落幕，留下的唯有自己的心。心无旁骛，便一切安好。
+
+人在旅途，终其一生，守心自暖。时光极美，在于它华丽地流走。我们来不及抒写一段风花雪月的篇章，便会匆匆落幕。我们也许不能像大树绿荫如盖，支撑起参天大厦。但是我们可以守一颗初心，不闻朝夕，不言得失，在生命中找到自己的位置。也许生命中有许多不曾迎风起舞的日子，但拥有一处清雅，书写一份属于自己的回忆，不辜负锦瑟韶光，便是最好。在布满褶皱的尘世中，有那么一两处光明洁净的时光，值得珍藏，便是幸福。
+
+若我们每一个人心中都有一池荷塘。若我们每一个人心中都能盛开一枝荷花。只言我心，不话沧桑。
+
+有一枝荷静静地盛开在心中，心中便自有芳香。即使韶华匆匆，即使一切都不会回到最初的模样。心与花木栖居一处，便活得洒脱。不管生活有多么粗糙，内心有这样一处精致之境，心自会清明。
+
+你若盛开，清风自来。
+				<button id="btn">点击</button>
+			</div>
+		</div>
+		<div style="width: 100%;height: 200px;background: #F94816;"></div>
+		<div style="width: 100%;height: 200px;background: #84750F;">
+			<i id="ee"></i>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<ul>
+				<li v-for = "item in testArr">{{item.title}}</li>
+			</ul>
+		</div>
+	</body>
+	<script>
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				testArr:[]
+			},
+			created:function(){
+				this.fun();
+			},
+			methods:{
+				fun:function(){
+			  		var that=this;
+			  		axios.get("news.json").then(function(response){
+						console.log(response);
+						console.log(response.data.data);
+						that.testArr=response.data.data;
+					}).catch(function(error){
+						console.log(error);
+					});
+		  		}
+			}
+		});
+//		vm.fun();
+//		axios.get("news.json").then(function(response){
+//			console.log(response.data);
+//			vm.testArr.t=response.data;
+//		}).catch(function(error){
+//			console.log(error);
+//		})
+	</script>
+</html>

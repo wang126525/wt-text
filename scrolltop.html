@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul li{
+				text-decoration: none;
+				list-style: none;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-1.4.4.min.js" ></script>
+		<script>
+			$(function(){
+				$("#dianji").click(function(){
+					console.log(111);
+//					$(document).scrollTop(600);
+//					$("#box").animate({top:200},1000);
+//					$("li:first").animate({height:600},1000);
+//					$("#box").scrollTop(400);
+//					console.log($("#box").scrollTop());//scrollTop()使用在元素出现滚动条的状态下，可以控制滚动条调到指定位置；
+					$("#box").animate({scrollTop:400},500);
+					
+				});
+			});
+		</script>
+	</head>
+	<body>
+		
+		<div id='box' style="background-color: #ceceec;height: 500px; width: 100%;overflow: auto;" >
+			<a href="#scroll" style="position: fixed;top:10px;left: 200px;z-index: 99;">24242</a>
+			<ul>
+				<li style="background-color: #1FBBDC;height: 200px;width:100%;">我是第一个100</li>
+				<li style="background-color: #A2E4F2;height: 300px;width:100%;">我是第一个300</li>
+				<li id="scroll" style="background-color: #9ACD32;height: 400px;width:100%;">我是第一个600</li>
+				<li style="background-color: #700F3C;height: 500px;width:100%;">我是第一个900</li>
+			</ul>
+			<button id="dianji" style="position: absolute;top: 0;">dianji</button>
+		</div>
+		<div id="box2" style="width: 100%;height: 200px;background-color: #666666;">最后一个</div>
+		
+	</body>
+</html>

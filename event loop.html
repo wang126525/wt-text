@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script>
+		console.log("我是第一个console");
+		setTimeout(function(){
+			console.log("执行定时器3000");
+		},3000);
+		setTimeout(function(){
+			console.log("执行定时器0000");
+		});
+		
+		
+//这样写就不会出现报错，直接将then放在实例的后面；		
+//		new Promise(function(resolve,reject){
+//			console.log("执行了promise");
+//			resolve();
+//			setTimeout(function(){
+//				console.log("执行了promise内的定时器6000");
+//				resolve();
+//			},6000);
+//		}).then(function(){
+//		
+//				console.log("执行了then");
+//			});
+//		
+//		console.log("我是最外面的");
+
+
+//这样写会出现报错，为什么？？？创建一个实例person；将then放在其后会报错；
+		var promise=new Promise(function(resolve,reject){
+			
+			console.log("执行了promise");
+			setTimeout(function(){
+				console.log("执行了promise内的定时器6000");
+				resolve();
+			},6000);
+			
+		});
+		promise.then(function(){//因为最开始写的是promise（）.then();而在上面定义的new promise是一个对象，所以就会报出promise不是个函数的错误；改过来就没问题了。
+		
+				console.log("执行了then");
+			});
+		console.log("我是最外面的");
+		
+//return回实例对象；
+//		var promise=function(){
+//			return new Promise(function(resolve,reject){
+//				console.log("我是promise");
+//				resolve();
+//				setTimeout(function(){
+//					console.log("我是6000");
+//					
+//				},6000);
+//			});
+//		};
+//		
+//		promise().then(function(){
+//			console.log("我是then");
+//			setTimeout(function(){
+//				console.log("我是4000");
+//			},4000);
+//			
+//		}).catch(function(err){
+//			console.log(err);
+//		});
+//		console.log("我是最外面的");
+//		setTimeout(function(){
+//			console.log("我是1000");
+//		},1000);
+		
+		
+		
+		
+		
+	</script>
+	<body>
+	</body>
+</html>

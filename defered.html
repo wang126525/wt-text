@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="jquery-3.2.1.js" ></script>
+		<script>
+			var def=$.Deferred();
+			function waite(){
+				function ceshi(){
+					alert(111);
+					def.resolve();
+				};
+				setTimeout(ceshi(),2000);
+				return def;
+			}
+			$.when(waite()).done(function(){
+				alert("我是done");
+			}).fail(function(){
+				alert("我是fail");
+			});
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>
